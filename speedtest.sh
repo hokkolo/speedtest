@@ -1,5 +1,7 @@
 #!/bin/bash
-
+TESTFILE='https://speed.hetzner.de/100MB.bin'
+LOCATION='/tmp/speedtestfile'
+TESTTIME='5'
 ## checking for network interface 
 if [ -z "$1" ]; then
         echo
@@ -11,18 +13,30 @@ if [ -z "$1" ]; then
 fi
 
 IF=$1
-end=$((SECONDS+5))
-while [ $SECONDS -lt $end ];
-do
+end=$((SECONDS+${TESTTIME}))
+wget ${TESTFILE} -O ${LOCATION} 
+PID=$!
+
+while true; do
+	STATUS=$( [ -s "${LOCATION}" ] )
+	if [ `cat "${STATUS}"` -eq 0 ]; then
+	while [ $SECONDS -lt $end ];
+		do
 	
-	R1=`cat /sys/class/net/$1/statistics/rx_bytes`
-	T1=`cat /sys/class/net/$1/statistics/tx_bytes`
-	sleep 1
-        R2=`cat /sys/class/net/$1/statistics/rx_bytes`
-        T2=`cat /sys/class/net/$1/statistics/tx_bytes`
-        TBPS=`expr $T2 - $T1`
-        RBPS=`expr $R2 - $R1`
-        TKBPS=`expr $TBPS / 1024`
-        RKBPS=`expr $RBPS / 1024`
-        echo "Uploaded $1: $TKBPS kB/s Downloaded $1: $RKBPS kB/s"
+			R1=`cat /sys/class/net/$1/statistics/rx_bytes`
+			T1=`cat /sys/class/net/$1/statistics/tx_bytes`
+			sleep 1
+       			R2=`cat /sys/class/net/$1/statistics/rx_bytes`
+		        T2=`cat /sys/class/net/$1/statistics/tx_bytes`
+		        TBPS=`expr $T2 - $T1`
+		        RBPS=`expr $R2 - $R1`
+		        TKBPS=`expr $TBPS / 1024`
+		        RKBPS=`expr $RBPS / 1024`
+		        echo "Uploaded $1: $TKBPS kB/s Downloaded $1: $RKBPS kB/s"
+	done
+	break;
+	fi
+
+
 done
+kill -9 ${PID}
