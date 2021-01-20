@@ -5,4 +5,8 @@ Bash script for bandwidth testing. Primary objective is to pull a test file and 
 
 > Clone the repo
 
-> Run the command ``` bash speedtest.sh [Network interface] ```
+> If neccesary update the default download URL and test duration in the script
+
+> Run the command 
+``` bash speedtest.sh [Network interface] ```
+
