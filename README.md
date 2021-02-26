@@ -1,5 +1,5 @@
 # Description
-Bash script for bandwidth testing. Primary objective is to pull a test file and when the download starts, the total bandwidth is calculated and once the test is completed the download process is killed and the test file is removed.
+Bash script for monitoring your internet Download speed . Primary objective is to pull a test file and when the download starts, the total bandwidth is calculated and once the test is completed the download process is killed and the test file is removed.
 
 ## Howtos
 
