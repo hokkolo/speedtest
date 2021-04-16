@@ -1,9 +1,12 @@
 #!/bin/bash
 ##Author Gautham
 ##Date 18012021
+
 TESTFILE='https://speed.hetzner.de/100MB.bin'
 LOCATION='/tmp/speedtestfile'
-TESTTIME='15'
+TESTTIME='5'
+EXEC_TIME='40'
+TH=$((SECONDS+${EXEC_TIME}))
 ## checking for network interface 
 if [ -z "$1" ]; then
         echo
@@ -15,12 +18,13 @@ if [ -z "$1" ]; then
 fi
 
 IF=$1
-end=$((SECONDS+${TESTTIME}))
-wget ${TESTFILE} -O ${LOCATION} &> /dev/null &
+
+wget $TESTFILE -O $LOCATION &> /dev/null &
 PID=$!
 #echo
-while true; do
-	if [ -s "${LOCATION}" ]; then
+    while [ $SECONDS -lt $TH ]; do
+	if [ -s "$LOCATION" ]; then
+	    end=$((SECONDS+$TESTTIME))
 	while [ $SECONDS -lt $end ];
 		do
 	
@@ -35,12 +39,11 @@ while true; do
 		        RKBPS=`expr $RBPS / 1024`
 		        echo "Uploaded $1: $TKBPS kB/s Downloaded $1: $RKBPS kB/s"
 	done
+	break;
 	echo
 	echo "Speed test completed"
-	break;
+	
 	fi
-
-
-done
-kill -9 ${PID} &> /dev/null
-rm -f ${LOCATION} &> /dev/null
+   done
+kill -9 $PID &> /dev/null
+rm -f $LOCATION &> /dev/null
