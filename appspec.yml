@@ -1,0 +1,10 @@
+version: 0.0
+os: linux
+files:
+  - source: /speedtest.sh
+    destination: /home/ubuntu/myscript
+hooks:
+  BeforeInstall:
+    - location: scripts/pre-install
+      timeout: 300
+      runas: root

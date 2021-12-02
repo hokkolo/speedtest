@@ -1,0 +1,4 @@
+#!/bin/bash
+if [ ! -d '/home/ubuntu/myscript/speedtest.sh' ] ;then
+	mkdir -p /home/ubuntu/myscript
+fi
