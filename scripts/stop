@@ -1,0 +1,2 @@
+#!/bin/bash
+rm -f /home/ubuntu/myscript/speedtest.sh
