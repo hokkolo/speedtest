@@ -1,6 +1,6 @@
 #!/bin/bash
 ##Author Gautham
-##Date 18012021
+##Date 02122021
 
 TESTFILE='https://speed.hetzner.de/100MB.bin'
 LOCATION='/tmp/speedtestfile'
