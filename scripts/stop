@@ -1,2 +1,5 @@
 #!/bin/bash
+
+if [ -f '/home/ubuntu/myscript/speedtest.sh' ]; then
 rm -f /home/ubuntu/myscript/speedtest.sh
+fi
